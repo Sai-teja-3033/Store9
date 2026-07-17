@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Staff Billing — Konda Store Manager</title>
+<link rel="icon" type="image/png" href="assets/logo.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<div class="app-shell">
+
+  <!-- ===================== Sidebar ===================== -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <img src="assets/logo.png" alt="Store logo" />
+      <span class="brand-name">Konda Store</span>
+    </div>
+
+    <span class="sidebar-role-pill">Staff Access</span>
+
+    <nav class="sidebar-nav">
+      <button class="nav-item active" data-view="billing" data-label="Billing">
+        <span class="nav-icon">🧾</span> Billing
+      </button>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="sidebar-user">
+        <div class="sidebar-user-avatar" id="user-avatar">S</div>
+        <div>
+          <div class="sidebar-user-name" id="current-user-label">staff</div>
+        </div>
+      </div>
+      <button class="logout-btn" id="logout-btn">Logout</button>
+    </div>
+  </aside>
+
+  <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+  <!-- ===================== Main Area ===================== -->
+  <div class="main-area">
+
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="mobile-menu-btn" id="mobile-menu-btn">☰</button>
+        <h1 id="page-title">Billing</h1>
+      </div>
+      <div class="topbar-date" id="topbar-date"></div>
+    </header>
+
+    <div class="content">
+
+      <!-- ===================== Billing View ===================== -->
+      <section class="view-section active" id="view-billing">
+
+        <div class="billing-layout">
+
+          <!-- ---------- Catalogue ---------- -->
+          <div class="panel">
+            <div class="panel-header">
+              <h2>Product Catalogue</h2>
+              <div class="search-bar">
+                <input type="text" id="catalogue-search" placeholder="Search products..." />
+              </div>
+            </div>
+            <div class="catalogue-grid" id="catalogue-grid"></div>
+            <div class="empty-state" id="catalogue-empty-state">
+              <div class="empty-icon">📦</div>
+              <div class="empty-title">No products found</div>
+              <div class="empty-sub">Try a different search term.</div>
+            </div>
+          </div>
+
+          <!-- ---------- Billing form + cart ---------- -->
+          <div class="panel cart-panel">
+
+            <div class="billing-form-section" id="billing-form-section">
+              <div class="panel-header">
+                <h2>New Bill</h2>
+              </div>
+
+              <div class="bill-meta-row">
+                <div class="bill-meta-item">Bill No. <strong id="bill-number-preview">on save</strong></div>
+                <div class="bill-meta-item">Date <strong id="bill-date"></strong></div>
+                <div class="bill-meta-item">Time <strong id="bill-time"></strong></div>
+              </div>
+
+              <form id="billing-form" novalidate>
+                <div class="field-group">
+                  <label class="field-label" for="customer-name">Customer Name</label>
+                  <input class="field-input" type="text" id="customer-name" placeholder="e.g. Rahul Sharma" />
+                  <span class="field-error" id="customer-name-error"></span>
+                </div>
+                <div class="field-group">
+                  <label class="field-label" for="customer-phone">Customer Phone</label>
+                  <input class="field-input" type="tel" id="customer-phone" placeholder="e.g. 9198xxxxxxx" />
+                  <span class="field-error" id="customer-phone-error"></span>
+                </div>
+              </form>
+
+              <h2 style="font-size:15px; margin: 18px 0 12px;">Cart</h2>
+              <div class="cart-items" id="cart-items"></div>
+              <div class="empty-state" id="cart-empty-state">
+                <div class="empty-icon">🛒</div>
+                <div class="empty-title">Cart is empty</div>
+                <div class="empty-sub">Add products from the catalogue to start a bill.</div>
+              </div>
+
+              <div class="cart-totals">
+                <div class="cart-totals-row">
+                  <span>Subtotal</span>
+                  <span id="cart-subtotal">₹0</span>
+                </div>
+                <div class="cart-totals-row grand">
+                  <span>Grand Total</span>
+                  <span id="cart-grand-total">₹0</span>
+                </div>
+              </div>
+
+              <div class="cart-actions">
+                <button class="btn btn-primary btn-block" id="generate-bill-btn" disabled>Generate Bill</button>
+              </div>
+            </div>
+
+            <!-- ---------- Generated Bill (receipt) ---------- -->
+            <div class="generated-bill-section" id="generated-bill-section">
+              <div class="receipt">
+                <div class="receipt-header">
+                  <div class="receipt-store-name">🧾 <span id="gb-store-name">Konda Store</span></div>
+                  <div class="receipt-sub">Bill No. <span id="gb-bill-number"></span></div>
+                  <div class="receipt-sub"><span id="gb-date"></span> · <span id="gb-time"></span></div>
+                </div>
+                <div class="receipt-divider"></div>
+                <div class="receipt-row"><span>Customer</span><span id="gb-customer-name"></span></div>
+                <div class="receipt-row"><span>Phone</span><span id="gb-customer-phone"></span></div>
+                <div class="receipt-divider"></div>
+                <table class="receipt-table">
+                  <thead>
+                    <tr><th>Item</th><th>Qty</th><th>Price</th><th>Total</th></tr>
+                  </thead>
+                  <tbody id="gb-items-body"></tbody>
+                </table>
+                <div class="receipt-total-row"><span>Total</span><span id="gb-grand-total"></span></div>
+                <div class="receipt-footer">Thank you for shopping with us 🙏</div>
+              </div>
+
+              <div class="generated-bill-actions">
+                <button class="btn btn-secondary" id="print-bill-btn">🖨 Print Bill</button>
+                <button class="btn btn-teal" id="whatsapp-bill-btn">💬 Send WhatsApp</button>
+                <button class="btn btn-primary" id="new-bill-btn">+ New Bill</button>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+    </div>
+  </div>
+</div>
+
+<script src="js/storage.js"></script>
+<script src="js/login.js"></script>
+<script src="js/products.js"></script>
+<script src="js/billing.js"></script>
+<script src="js/staff.js"></script>
+<script>
+  document.getElementById('topbar-date').textContent = new Date().toLocaleDateString('en-IN', { weekday: 'long', day: '2-digit', month: 'long', year: 'numeric' });
+</script>
+</body>
+</html>

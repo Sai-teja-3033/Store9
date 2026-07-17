@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Konda Store Manager — Login</title>
+<link rel="icon" type="image/png" href="assets/logo.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="login-page">
+
+  <!-- ===================== Login Card ===================== -->
+  <main class="login-card">
+
+    <div class="login-brand">
+      <img src="assets/logo.png" alt="Store logo" />
+      <div class="login-brand-text">
+        <div class="brand-name">Konda Store</div>
+        <div class="brand-tagline">Store Management &amp; Billing</div>
+      </div>
+    </div>
+
+    <h1 class="login-heading">Welcome back</h1>
+    <p class="login-sub">Sign in to continue to your dashboard.</p>
+
+    <!-- Role selector -->
+    <div class="role-tabs" role="tablist" aria-label="Select login role">
+      <button type="button" class="role-tab active" data-role="owner">Owner</button>
+      <button type="button" class="role-tab" data-role="staff">Staff</button>
+    </div>
+
+    <div id="login-error" class="login-error" role="alert"></div>
+
+    <form id="login-form" novalidate>
+      <div class="field-group">
+        <label class="field-label" for="username">Username</label>
+        <input class="field-input" type="text" id="username" name="username" autocomplete="username" placeholder="owner" />
+      </div>
+
+      <div class="field-group">
+        <label class="field-label" for="password">Password</label>
+        <input class="field-input" type="password" id="password" name="password" autocomplete="current-password" placeholder="••••" />
+      </div>
+
+      <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+    </form>
+
+    <p class="login-demo-hint">
+      Demo credentials — <b>Owner:</b> owner / 1234 &nbsp;·&nbsp; <b>Staff:</b> staff / 1234
+    </p>
+
+  </main>
+
+  <script src="js/storage.js"></script>
+  <script src="js/login.js"></script>
+</body>
+</html>
